@@ -34,21 +34,21 @@ The **AI News Summarizer** is a Python-based project that scrapes the latest new
 ### Installation
 1. Clone this repository
 
-    `git clone <repository-url>`
-
-    `cd <repository-folder>`
+    ```plaintext
+    git clone <repository-url>
+    cd <repository-folder>
 
 2. Set up a virtual environment (recommended):
 - On MacOS/Linux
 
-    `python -m venv venv`
-
-    `source venv/bin/activate`
+    ```plaintext
+    python -m venv venv
+    source venv/bin/activate
 - On Windows 
 
-    `python -m venv venv`
-
-    `venv\Scripts\activate`
+    ```plaintext
+    python -m venv venv
+    venv\Scripts\activate
 
 3. Install the required dependencies
 
