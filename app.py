@@ -74,7 +74,7 @@ st.markdown(
 
 st.markdown("<h1 style='text-align: center;'>Try Out The AI News Summarizer</h1>", unsafe_allow_html=True)
 
-
+# Initialize session state variables
 if "summary_generated" not in st.session_state:
     st.session_state.summary_generated = False
 if "summary" not in st.session_state:
@@ -83,29 +83,24 @@ if "summary" not in st.session_state:
 button_placeholder = st.empty()
 summary_placeholder = st.empty()
 
-
 def generate_summary():
     """
     Generates the summary by scraping the website and summarizing the content.
     """
     try:
-        # Initialize components
         config = Config()
         scraper = WebsiteScraper("https://economictimes.indiatimes.com/tech/artificial-intelligence?from=mdr")
         summarizer = GPTSummarizer(config.api_key)
 
-        # Generate the summary
         summary = summarizer.summarize(scraper)
         st.session_state.summary = summary
+        st.session_state.summary_generated = True  # Mark summary as generated
     except Exception as e:
         st.error(f"An error occurred while generating the summary: {e}")
         st.session_state.summary_generated = False  # Reset the state if there's an error
 
+# Handle button click and summary generation
 if st.session_state.summary_generated:
-    if not st.session_state.summary:
-        with summary_placeholder.container():
-            with st.spinner("Generating summary, please wait..."):
-                generate_summary()
     if st.session_state.summary:
         button_placeholder.empty()
 
@@ -123,4 +118,8 @@ else:
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             if st.button("Generate AI News Article", key="generate_button"):
+                with summary_placeholder.container():
+                    with st.spinner("Generating summary, please wait..."):
+                        generate_summary()
                 st.session_state.summary_generated = True
+                st.rerun()  
