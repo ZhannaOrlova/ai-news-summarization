@@ -13,23 +13,42 @@ class WebsiteScraper:
         self.url = url
         self.soup = self._fetch_website()
         self.title = self._extract_title()
-        self.text = self._extract_text()
+        self.text = self._extract_all_articles()  # Combine all articles into one text
 
     def _fetch_website(self):
         response = requests.get(self.url, headers=self.HEADERS)
-        response.raise_for_status # e.g., 404
-        return BeautifulSoup(response.content, 'html.parser') 
-    
+        response.raise_for_status()  # Raise an error for bad status codes
+        return BeautifulSoup(response.content, 'html.parser')
+
     def _extract_title(self):
         return self.soup.title.string if self.soup.title else "No title found"
-    
-    def _extract_text(self):
-        for irrelevant in self.soup.body([
-            "script",
-            "style",
-            "img",
-            "input"
-        ]):
-            irrelevant.decompose()
-        return self.soup.body.get_text(separator="\n", strip=True)
-    
+
+    def _extract_all_articles(self):
+        """
+        Extracts and combines the content of all articles.
+        """
+        combined_text = ""
+        article_links = self.soup.find_all("a", class_="article-link") 
+
+        for link in article_links:
+            article_url = link["href"]
+            article_content = self._extract_article_content(article_url)
+            if article_content:
+                combined_text += f"{article_content}\n\n"
+
+        return combined_text.strip()
+
+    def _extract_article_content(self, article_url):
+        """
+        Extracts the content of a single article.
+        """
+        try:
+            response = requests.get(article_url, headers=self.HEADERS)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            content = soup.find("div", class_="article-content").get_text() 
+            return content.strip()
+        except Exception as e:
+            print(f"Error scraping article: {e}")
+            return None

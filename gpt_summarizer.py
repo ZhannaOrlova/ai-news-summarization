@@ -11,12 +11,12 @@ class GPTSummarizer:
         self.openai.api_key = api_key
 
     def summarize(self, website):
+        """
+        Summarizes the website content using the OpenAI API.
+        """
         messages = PromptBuilder.messages(website)
         response = self.openai.chat.completions.create(
-            model='gpt-4o-mini',
+            model='gpt-4',  # Use the appropriate GPT model
             messages=messages
         )
         return response.choices[0].message.content
-    
-
-        
