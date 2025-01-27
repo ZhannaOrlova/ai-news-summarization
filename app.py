@@ -65,6 +65,7 @@ st.markdown(
         text-align: center;
         max-width: 800px;
         margin: 30px auto;
+        color: black;
     }}
     </style>
     """,

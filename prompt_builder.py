@@ -12,7 +12,7 @@ class PromptBuilder:
         return(
             f"The Economic Times tech section {website.title} has a relevant collection of the lates news."
             f"You're task is to create an engaging and intelligent summary in the style of a newsparer artichle story that includes all the topics"
-            f"Don't use subtitles and no extra formatting."
+            f"Don't use subtitles. Avoid any formating. The output must be plain text."
             f"Here are the news {website.text}"
         )
 
