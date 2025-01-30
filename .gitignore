@@ -1,26 +1,20 @@
-# Ignore .env files
 .env
 
-# Ignore everything that starts with a dot (.)
 .*
 
-# But allow Git configuration files (e.g., .gitignore)
 !.gitignore
 !.gitattributes
+!.env.example
 
-# Ignore virtual environment directory
 venv/
 
-# Optional: Ignore Python cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Optional: Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Optional: Ignore logs and temporary files
 *.log
 *.tmp
 *.swp

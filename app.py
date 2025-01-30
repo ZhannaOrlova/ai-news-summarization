@@ -10,10 +10,40 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+<style>
+    /* Global button styling */
+    .stButton > button {
+        background-color: white !important;
+        border: 2px solid black !important;  /* Black outline */
+        color: black !important;  /* Black text */
+        border-radius: 8px !important;  /* Slightly rounded corners */
+        padding: 8px 20px !important;  /* Less padding for smaller height */
+        font-size: 16px !important;  /* Slightly smaller font */
+        font-weight: bold !important;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1) !important;  /* Subtle shadow */
+        transition: none !important;
+        height: auto !important;  /* Remove fixed height */
+        min-width: 120px !important;  /* Minimum width for better proportions */
+    }
+
+    .stButton > button:hover,
+    .stButton > button:active,
+    .stButton > button:focus {
+        background-color: white !important;
+        color: black !important;
+        border-color: black !important;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+        transform: none !important;
+    }
+
+    .stButton > button > div > div {
+        display: none !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 def get_base64_image(image_path):
-    """
-    Encodes an image to base64 to use as a background.
-    """
     try:
         with open(image_path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
@@ -22,41 +52,21 @@ def get_base64_image(image_path):
         return ""
 
 BACKGROUND_IMAGE_PATH = "wallpaper.jpg"
-background_image_base64 = get_base64_image(BACKGROUND_IMAGE_PATH)  
+background_image_base64 = get_base64_image(BACKGROUND_IMAGE_PATH)
 
 st.markdown(
     f"""
     <style>
-    /* Apply background image to the main app container */
     [data-testid="stAppViewContainer"] {{
         background: url("data:image/jpeg;base64,{background_image_base64}") no-repeat center center fixed;
         background-size: cover;
     }}
     [data-testid="stHeader"] {{
-        background: transparent;  /* Remove header background */
+        background: transparent;
     }}
     [data-testid="stToolbar"] {{
-        display: none;  /* Remove Streamlit toolbar */
+        display: none;
     }}
-    /* Style the button */
-    button[data-testid="stButton"] {{
-        background-color: white;
-        border: 2px solid #f03e3e;
-        border-radius: 15px;
-        padding: 15px 30px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #f03e3e;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }}
-    button[data-testid="stButton"]:hover {{
-        background-color: #f03e3e;
-        color: white;
-        transform: scale(1.05);
-    }}
-    /* Style the summary container */
     .summary-container {{
         background-color: rgba(255, 255, 255, 0.95);
         border-radius: 15px;
@@ -83,26 +93,20 @@ button_placeholder = st.empty()
 summary_placeholder = st.empty()
 
 def generate_summary():
-    """
-    Generates the summary by scraping the website and summarizing the content.
-    """
     try:
-
         config = Config()
-        scraper = WebsiteScraper("https://economictimes.indiatimes.com/tech/artificial-intelligence?from=mdr")
+        scraper = WebsiteScraper("https://timesofindia.indiatimes.com/topic/artificial-intelligence/news")
         summarizer = GPTSummarizer(config.api_key)
-
         summary = summarizer.summarize(scraper)
         st.session_state.summary = summary
-        st.session_state.summary_generated = True  # Mark summary as generated
+        st.session_state.summary_generated = True
     except Exception as e:
         st.error(f"An error occurred while generating the summary: {e}")
-        st.session_state.summary_generated = False  # Reset the state if there's an error
+        st.session_state.summary_generated = False
 
 if st.session_state.summary_generated:
     if st.session_state.summary:
         button_placeholder.empty()
-
         summary_placeholder.markdown(
             f"""
             <div class='summary-container'>
@@ -121,4 +125,4 @@ else:
                     with st.spinner("Generating summary, please wait..."):
                         generate_summary()
                 st.session_state.summary_generated = True
-                st.rerun()  
+                st.rerun()
