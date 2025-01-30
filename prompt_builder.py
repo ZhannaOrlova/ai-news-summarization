@@ -13,9 +13,11 @@ class PromptBuilder:
         Constructs the user prompt for summarizing all articles.
         """
         return (
-            f"The Economic Times tech section '{website.title}' has a collection of the latest news."
+            f"The following website '{website.title}' has a collection of the latest news."
             f"Your task is to create an engaging and intelligent and professional summary in the style of a newspaper article and reporting clearly on each topic but in a continous way avoiding ennumaration."
             f"Avoid unnecesary introductions and overly generic comments, but do make a conclusion in an academic style"
+            f"Don't use enumeration or bullet points or any kind of listing."
+            f"Don't create a title."
             f"Don't use subtitles. Avoid any formatting. The output must be plain text."
             f"Here are the news:\n\n{website.text}"
         )
