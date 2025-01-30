@@ -18,6 +18,7 @@ class PromptBuilder:
             f"Avoid unnecesary introductions and overly generic comments, but do make a conclusion in an academic style"
             f"Don't use enumeration or bullet points or any kind of listing."
             f"Don't create a title."
+            f"Select the most interesting or alarming topics."
             f"Don't use subtitles. Avoid any formatting. The output must be plain text."
             f"Here are the news:\n\n{website.text}"
         )
