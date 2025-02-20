@@ -16,8 +16,8 @@ class GPTSummarizer:
         """
         messages = PromptBuilder.messages(website)
         response = self.openai.chat.completions.create(
-            model='gpt-4',  
-            messages=messages
+            model='gpt-4o-mini',  
+            messages=messages,
             #max_tokens=250
         )
         return response.choices[0].message.content
