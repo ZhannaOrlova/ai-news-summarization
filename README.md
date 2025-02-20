@@ -74,3 +74,11 @@ Pull requests are welcome.
 ### Future enhancements 
 While the current implementation runs entirely in the terminal, a major future enhancement will involve the creation of a user-friendly streamlit interface and deployed to streamlit cloud. 
 
+### Check-out the webpage in streamlit
+Enter https://ai-news-summarization-s3uqssphobgc8rqvgutcgw.streamlit.app/ 
+- If the app is asleep send me a message to activate it 
+
+![Alt text](photo_2025-02-19_19-04-58.jpg)
+![Alt text](photo_2025-02-19_19-05-02.jpg)
+![Alt text](photo_2025-02-19_19-05-06.jpg)
+
